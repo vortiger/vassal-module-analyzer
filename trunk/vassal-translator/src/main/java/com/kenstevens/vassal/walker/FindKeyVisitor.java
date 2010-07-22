@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 
 import VASSAL.build.AbstractConfigurable;
 import VASSAL.build.Buildable;
+import VASSAL.build.module.Map;
 import VASSAL.build.module.PrototypeDefinition;
 import VASSAL.build.widget.PieceSlot;
 import VASSAL.configure.HotKeyConfigurer;
@@ -43,6 +44,8 @@ public class FindKeyVisitor implements ModuleVisitor {
 			pieces = GamePieceExploder.getPieces((PrototypeDefinition) abstractConfigurable);
 		} else if (abstractConfigurable instanceof PieceSlot) {
 			pieces = GamePieceExploder.getPieces((PieceSlot) abstractConfigurable);
+		} else if (abstractConfigurable instanceof Map) {
+			printMapKeyReferences("  "+indent, (Map)abstractConfigurable);
 		}
 		// FIXME generalize to things other than PrototypeDefinitions
 		if (pieces == null) {
@@ -61,6 +64,11 @@ public class FindKeyVisitor implements ModuleVisitor {
 		}
 	}
 
+	private void printMapKeyReferences(String indent,
+			Map map) {
+		printFieldValue(indent, "moveKey", map.getMoveKey());
+	}
+
 	private void printKeyReferences(String indent, GamePiece piece) throws IllegalArgumentException, IllegalAccessException {
 		Class<? extends GamePiece> clazz = piece.getClass();
 		Field[] fields = clazz.getDeclaredFields();
@@ -74,18 +82,18 @@ public class FindKeyVisitor implements ModuleVisitor {
 			String prefix = (piece instanceof TranslatablePiece ? ((TranslatablePiece)piece).getDescription() : piece.getClass().getSimpleName());
 			String fieldName = prefix+"."+field.getName();
 			if (type.getComponentType() == null) {
-				printFieldValue(indent, field, fieldName, value);
+				printFieldValue(indent, fieldName, value);
 			} else {
 				// TODO Optimize
 				Object[] array = (Object[])value;
 				for (Object item : array) {
-					printFieldValue(indent, field, fieldName, item);
+					printFieldValue(indent, fieldName, item);
 				}
 			}
 		}
 	}
 
-	private void printFieldValue(String indent, Field field, String fieldName,
+	private void printFieldValue(String indent, String fieldName,
 			Object value) {
 		if (value instanceof NamedKeyStroke) {
 			NamedKeyStroke namedKeyStroke = (NamedKeyStroke) value;

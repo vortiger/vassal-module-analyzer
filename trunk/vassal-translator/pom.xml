@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kenstevens.com</groupId>
-	<artifactId>vassal-translator</artifactId>
-	<name>Vassal Module Translator</name>
+	<artifactId>vassal-module-analyzer</artifactId>
+	<name>Vassal Module Analyzer</name>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Translate Vassal Module into a format that's easier to browse</description>
+	<description>Analyse a VASSAL module, and print out a report of control flows</description>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
