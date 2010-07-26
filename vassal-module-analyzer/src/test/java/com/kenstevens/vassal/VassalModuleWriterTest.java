@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.junit.Test;
 import org.w3c.dom.Element;
 
+import com.kenstevens.vassal.util.VassalModuleLoader;
+
 import VASSAL.build.Builder;
 import VASSAL.build.GameModule;
 

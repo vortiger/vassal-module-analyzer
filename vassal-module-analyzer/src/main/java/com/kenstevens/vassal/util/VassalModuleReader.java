@@ -1,4 +1,4 @@
-package com.kenstevens.vassal;
+package com.kenstevens.vassal.util;
 
 import java.io.IOException;
 

@@ -1,5 +1,7 @@
 package com.kenstevens.vassal.walker;
 
+import java.util.Stack;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -7,35 +9,54 @@ import VASSAL.build.Buildable;
 import VASSAL.build.Builder;
 import VASSAL.build.IllegalBuildException;
 
+import com.kenstevens.vassal.keystroke.FindKeyVisitor;
+import com.kenstevens.vassal.mock.MockBuildable;
+
 public class ModuleWalker {
 
-	private void walk(int depth, Element buildElement, ModuleVisitor visitor) {
+	private void walk(Stack<Buildable> path, Element buildElement, ModuleVisitor moduleVisitor) {
 		String tagName = buildElement.getTagName();
-		visitElement(depth, buildElement, visitor, tagName);
+		Buildable buildable = getBuildable(buildElement, tagName);
+		if (buildable == null) {
+			buildable = new MockBuildable(buildElement);
+		} else if (ColourPicker.isOtherPlayer(buildable)) {
+			return;
+		}
 
+		moduleVisitor.startVisit(path, buildable);
+		// In practice, either we'll be walking pieces or visiting children here...
+		new PieceWalker(moduleVisitor).visitPieces(path, buildElement, buildable);
+		visitChildren(path, buildElement, moduleVisitor, buildable);
+		moduleVisitor.endVisit(path, buildable);
+	}
+
+	private void visitChildren(Stack<Buildable> path, Element buildElement,
+			ModuleVisitor moduleVisitor, Buildable buildable) {
+		path.push(buildable);
 		for (Node child = buildElement.getFirstChild(); child != null; child = child
 				.getNextSibling()) {
 			if (Node.ELEMENT_NODE == child.getNodeType()) {
 				Element childNode = (Element) child;
-				walk(depth + 1, childNode, visitor);
+				walk(path, childNode, moduleVisitor);
 			}
 		}
+		path.pop();
 	}
 
-	private void visitElement(int depth, Element buildElement, ModuleVisitor visitor,
-			String tagName) {
+	private Buildable getBuildable(Element buildElement, String tagName) {
+		Buildable retval = null;
 		try {
 			Class.forName(tagName);
-			Buildable buildable = Builder.create(buildElement);
-			visitor.visit(depth, buildElement, buildable);
+			retval = Builder.create(buildElement);
 		} catch (IllegalBuildException e) {
 			// Skip
 		} catch (ClassNotFoundException e) {
 			// Skip
 		}
+		return retval;
 	}
 
-	public void walk(Element buildElement, FindKeyVisitor findKeyVisitor) {
-		walk(0, buildElement, findKeyVisitor);
+	public void walk(Element buildElement, ModuleVisitor moduleVisitor) {
+		walk(new Stack<Buildable>(), buildElement, moduleVisitor);
 	}
 }

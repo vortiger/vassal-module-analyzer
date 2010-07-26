@@ -1,11 +1,11 @@
-package com.kenstevens.vassal;
+package com.kenstevens.vassal.util;
 
 import java.io.IOException;
 
-import com.kenstevens.vassal.mock.MockMenuManager;
-
 import VASSAL.build.GameModule;
 import VASSAL.tools.icon.IconFactory;
+
+import com.kenstevens.vassal.mock.MockMenuManager;
 
 public class VassalModuleLoader {
 
