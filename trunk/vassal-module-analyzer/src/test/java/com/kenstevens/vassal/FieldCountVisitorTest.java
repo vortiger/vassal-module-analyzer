@@ -9,22 +9,23 @@ import org.w3c.dom.Element;
 
 import VASSAL.build.Builder;
 
+import com.kenstevens.vassal.keystroke.FieldCountVisitor;
 import com.kenstevens.vassal.keystroke.FindKeyVisitor;
 import com.kenstevens.vassal.keystroke.PrintKeyStrokeVisitor;
-import com.kenstevens.vassal.util.Printer;
 import com.kenstevens.vassal.walker.ModuleWalker;
+import com.kenstevens.vassal.walker.PieceWalker;
 
-public class FindKeyVisitorTest extends VassalModuleLoaderTest {
+public class FieldCountVisitorTest extends VassalModuleLoaderTest {
 
 	@Test
 	public void walkModule() throws IOException {
-		Printer.writeTo("TTA_keyList.txt");
-
 		org.w3c.dom.Document doc = Builder.createNewDocument();
 	    Element buildElement = module.getBuildElement(doc);
 	    assertEquals("VASSAL.launch.BasicModule", buildElement.getTagName());
 
 		ModuleWalker moduleWalker = new ModuleWalker();
-		moduleWalker.walk(buildElement, new FindKeyVisitor(new PrintKeyStrokeVisitor()));
+		FieldCountVisitor fieldCountVisitor = new FieldCountVisitor();
+		moduleWalker.walk(buildElement, new FindKeyVisitor(fieldCountVisitor));
+		fieldCountVisitor.printFieldCounts();
 	}
 }

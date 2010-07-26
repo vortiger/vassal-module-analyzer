@@ -8,6 +8,9 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 
+import com.kenstevens.vassal.util.Printer;
+import com.kenstevens.vassal.util.VassalModuleLoader;
+
 import VASSAL.build.GameModule;
 
 public class VassalModuleLoaderTest {
@@ -18,7 +21,6 @@ public class VassalModuleLoaderTest {
 	public void loadModule() throws IOException {
 		VassalModuleLoader vassalModuleLoader = new VassalModuleLoader();
 		module = vassalModuleLoader.load(FILENAME);
-		Printer.writeTo("TTA.txt");
 	}
 
 	@After
