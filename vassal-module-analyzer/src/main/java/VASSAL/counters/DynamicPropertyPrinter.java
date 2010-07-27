@@ -20,7 +20,7 @@ public class DynamicPropertyPrinter {
 			if (keyCommand.propChanger instanceof PropertySetter) {
 				Printer.println(depth, i+") value: "+((PropertySetter)keyCommand.propChanger).getRawValue());
 			} else if (keyCommand.propChanger instanceof IncrementProperty) {
-				Printer.println(depth, i+") value: increment.");
+				Printer.println(depth, i+") value: increment by "+((IncrementProperty)keyCommand.propChanger).getIncrement());
 			} else {
 				System.err.println("No handler for "+keyCommand.propChanger.getClass().getSimpleName());
 			}
