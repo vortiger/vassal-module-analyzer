@@ -1,0 +1,34 @@
+entry point 1
+PrototypeDefinition name="PickCard"
+TriggerAction Menu "Add Card to Hand" = ctrl A
+-> alt ctrl shift A
+-> ctrl back quote
+
+CardSlot name="Colossus"
+-> Delete
+-> ALT 1 to WonderUC
+
+PieceSlot name="WonderUC" ALT 1
+-> Set WonderUC.WonderUC = 1
+-> Report $playerSide$ ($playerName$) has begun work on a Wonder, $Wonder_Name$! *
+-> Increment Global.BlueCivil -$BlueWonders$
+-> Increment Global.BlueUsedCivil $BlueWonders$
+-> Report $playerSide$ ($playerName$) has completed $BlueWonders$ Wonders, so spends an extra $BlueWonders$ Civil action(s) to start construction on $Wonder_Name$ (automatically adjusted). *
+
+entry point 2
+PrototypeDefinition name="AgeACivil"
+TriggerAction when ctrl A and Cost = 1 and Wonder = True
+-> ALT SEMICOLON
+-> CTRL SEMICOLON to WonderUC
+
+PieceSlot name="WonderUC" CTRL SEMICOLON
+-> Increment Global.BlueCivil -1
+-> Increment Global.BlueUsedCivil 1
+
+Question: was Cost = 1?
+
+Checking PrototypeDefinition name="AgeACivil"
+
+Added debugging report statements
+
+Can't get debugging statements to display

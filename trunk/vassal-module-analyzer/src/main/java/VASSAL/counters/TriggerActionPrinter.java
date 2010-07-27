@@ -10,6 +10,7 @@ import com.kenstevens.vassal.util.Printer;
 public class TriggerActionPrinter {
 
 	public static void print(int depth, TriggerAction triggerAction) {
+		Printer.println(depth, "Menu: "+triggerAction.command);
 		Printer.println(depth, "When: "+triggerAction.propertyMatch.getExpression());
 		List<NamedKeyStroke>inKeys = new ArrayList<NamedKeyStroke>();
 		if (triggerAction.key != null) {

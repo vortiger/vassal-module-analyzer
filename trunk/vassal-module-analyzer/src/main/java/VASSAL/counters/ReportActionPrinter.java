@@ -6,6 +6,6 @@ public class ReportActionPrinter {
 
 	public static void print(int depth, ReportState reportAction) {
 		Printer.println(depth, "Keys in: "+Printer.toString(reportAction.keys));
-		Printer.println(depth, "Report format: "+reportAction.format.getText());
+		Printer.println(depth, "Report format: "+reportAction.reportFormat);
 	}
 }
