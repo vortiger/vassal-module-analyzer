@@ -1,3 +1,5 @@
+This file contains notes for my progress in fixing the bug that undercharges civil actions for wonder cards.
+
 entry point 1
 PrototypeDefinition name="PickCard"
 TriggerAction Menu "Add Card to Hand" = ctrl A
