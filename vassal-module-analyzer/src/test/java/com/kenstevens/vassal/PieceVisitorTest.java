@@ -19,7 +19,7 @@ public class PieceVisitorTest extends VassalModuleLoaderTest {
 
 	@Test
 	public void walkModule() throws IOException {
-		Printer.writeTo("TTA_code.txt");
+		Printer.writeTo("all_pieces.txt");
 
 		org.w3c.dom.Document doc = Builder.createNewDocument();
 	    Element buildElement = module.getBuildElement(doc);
