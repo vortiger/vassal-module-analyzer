@@ -27,5 +27,6 @@ public class PieceVisitorTest extends VassalModuleLoaderTest {
 
 		ModuleWalker moduleWalker = new ModuleWalker();
 		moduleWalker.walk(buildElement, new PieceVisitor());
+		System.out.println("Total number of traits: "+moduleWalker.getPieceCount());
 	}
 }

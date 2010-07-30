@@ -24,21 +24,23 @@ public class PieceWalker {
 		this.moduleVisitor = moduleVisitor;
 	}
 
-	public void visitPieces(Stack<Buildable> path, Element buildElement,
+	public int visitPieces(Stack<Buildable> path, Element buildElement,
 			Buildable buildable) {
+
 		if (!(buildable instanceof AbstractConfigurable)) {
-			return;
+			return 0;
 		}
 		if (ColourPicker.isOtherPlayer(buildable)) {
-			return;
+			return 0;
 		}
 		AbstractConfigurable abstractConfigurable = (AbstractConfigurable) buildable;
 		path.push(buildable);
-		visitPieces(path, abstractConfigurable);
+		int pieceCount = visitPieces(path, abstractConfigurable);
 		path.pop();
+		return pieceCount;
 	}
 
-	private void visitPieces(List<Buildable> path,
+	private int visitPieces(List<Buildable> path,
 			AbstractConfigurable abstractConfigurable) {
 		List<GamePiece> pieces = null;
 		if (abstractConfigurable instanceof PrototypeDefinition) {
@@ -51,12 +53,14 @@ public class PieceWalker {
 			moduleVisitor.visit(path, (Map) abstractConfigurable);
 		}
 		if (pieces == null) {
-			return;
+			return 0;
 		}
 		Collections.reverse(pieces);
+		int pieceCount = 0;
 		for (GamePiece piece : pieces) {
 			moduleVisitor.visit(path, piece);
+			++pieceCount;
 		}
+		return pieceCount;
 	}
-
 }

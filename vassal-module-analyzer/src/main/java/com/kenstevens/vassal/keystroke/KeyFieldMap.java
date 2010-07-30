@@ -10,10 +10,8 @@ public final class KeyFieldMap {
 	private static final KeyFieldType listener = new KeyFieldType(true);
 	private static final KeyFieldType sender = new KeyFieldType(false);
 	static {
-		// FIXME complete these
 		fieldMap.put("ActionButton.stroke", sender);
 		fieldMap.put("CounterGlobalKeyCommand.key", listener);
-		// TODO globalKey only sends if piece matches filter
 		fieldMap.put("CounterGlobalKeyCommand.globalKey", sender);
 		fieldMap.put("Delete.key", listener);
 		fieldMap.put("Embellishment.decreaseKeyStroke", listener);
