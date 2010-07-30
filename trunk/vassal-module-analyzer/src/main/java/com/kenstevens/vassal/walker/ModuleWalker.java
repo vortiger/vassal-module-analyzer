@@ -13,6 +13,7 @@ import com.kenstevens.vassal.keystroke.FindKeyVisitor;
 import com.kenstevens.vassal.mock.MockBuildable;
 
 public class ModuleWalker {
+	private int pieceCount = 0;
 
 	private void walk(Stack<Buildable> path, Element buildElement, ModuleVisitor moduleVisitor) {
 		String tagName = buildElement.getTagName();
@@ -25,7 +26,8 @@ public class ModuleWalker {
 
 		moduleVisitor.startVisit(path, buildable);
 		// In practice, either we'll be walking pieces or visiting children here...
-		new PieceWalker(moduleVisitor).visitPieces(path, buildElement, buildable);
+		PieceWalker pieceWalker = new PieceWalker(moduleVisitor);
+		pieceCount += pieceWalker.visitPieces(path, buildElement, buildable);
 		visitChildren(path, buildElement, moduleVisitor, buildable);
 		moduleVisitor.endVisit(path, buildable);
 	}
@@ -58,5 +60,9 @@ public class ModuleWalker {
 
 	public void walk(Element buildElement, ModuleVisitor moduleVisitor) {
 		walk(new Stack<Buildable>(), buildElement, moduleVisitor);
+	}
+
+	public int getPieceCount() {
+		return pieceCount;
 	}
 }

@@ -27,10 +27,32 @@ PieceSlot name="WonderUC" CTRL SEMICOLON
 -> Increment Global.BlueCivil -1
 -> Increment Global.BlueUsedCivil 1
 
-Question: was Cost = 1?
+Solution found
+in PrototypeDefinition name="AgeACivil"
+change
+TriggerAction when ctrl A and Cost = 1 and Wonder = True
+to
+TriggerAction when ctrl alt shift A and Cost = 1 and Wonder = True
 
-Checking PrototypeDefinition name="AgeACivil"
 
-Added debugging report statements
+did 2 things:
+1) Added report when msg received by wonderuc pieceslot
+2) added trigger action to ageacivil that doesn't care about cost or wonder flag
+3) Done last time changed in ageacivil ctrl-a to ctrl backquote (was ctrl shift alt a)--neither worked
 
-Can't get debugging statements to display
+---restore old---
+
+* Blue (Ken Stevens) has begun work on a Wonder, Colossus! *
+* Blue (Ken Stevens) has completed 0 Wonders, so spends an extra 0 Civil action(s) to start construction on Colossus (automatically adjusted). *
+* cs8 cost is 3 wonder is True
+* alt cost is 3 wonder is True
+* ctrl a cost is 3 wonder is True
+* cs9 cost is 3 wonder is True
+
+Worked on the colossus!
+Because I disabled delete on it!
+
+ctrl a report always works on PrototypeDefinition name="AgeACivil"
+but ctrl a trigger does not work
+even without properties
+so if delete, i can report but not trigger
